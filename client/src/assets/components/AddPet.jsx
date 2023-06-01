@@ -58,7 +58,7 @@ export default function AddPet() {
       body: JSON.stringify(input),
     };
     try {
-      const response = await fetch("/api", options);
+      const response = await fetch("/api/pets", options);
       if (!response.ok) throw new Error(response.statusText);
     } catch (err) {
       setError(err.message);
