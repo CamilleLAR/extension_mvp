@@ -65,14 +65,6 @@ export default function AddPet() {
     }
   };
 
-  const updatePet = async (id) => {
-    sendRequest("PUT", id);
-  };
-
-  const deletePet = async (id) => {
-    sendRequest("DELETE", id);
-  };
-
   const sendRequest = async (method, id = "", options = {}) => {
     try {
       const response = await fetch(`/api/${id}`, { method, ...options });

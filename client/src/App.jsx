@@ -4,7 +4,6 @@ import Home from "./assets/Pages/Home";
 import Pet from "./assets/Pages/Pet";
 import Pets from "./assets/Pages/Pets";
 import AddPet from "./assets/components/AddPet";
-
 import "./App.css";
 
 export default function App() {

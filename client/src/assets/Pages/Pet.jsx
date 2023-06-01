@@ -5,7 +5,7 @@ import "./Pet.css";
 
 function Pet() {
   const [pet, setPet] = useState({});
-  const { id } = useParams();
+  const { pet_id } = useParams();
   const [editingPetId, setEditingPetId] = useState(null);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function Pet() {
 
   async function loadPet() {
     try {
-      const response = await fetch(`/api/${id}`);
+      const response = await fetch(`/api/${pet_id}`);
       const data = await response.json();
       setPet(data);
     } catch (error) {

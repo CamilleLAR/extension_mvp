@@ -12,7 +12,6 @@ export default function Home() {
         <h1>Pet Diary 📖</h1>
         <h4>Add your pet 🖋️</h4>
         <div className="home-container">
-          
           <AddPet />
         </div>
       </div>

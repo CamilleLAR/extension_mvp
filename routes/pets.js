@@ -23,7 +23,7 @@ router.get("/:id", petMustExist, async function(req, res) {
       res.send(results.data[0]);
     } else res.status(404).send({ message: "Pet was not found" });
   } catch (err) {
-    res.status(500).send({ message: err });
+    res.status(500).send(err);
   }
 })
 
@@ -34,11 +34,10 @@ router.post("/", async function(req,res) {
     const results = await db(
     `INSERT INTO petlist (name, type, birthdate, notes) VALUES("${name}","${type}","${birthdate}","${notes}");`
     );
-    res.send({message:'Pet was added'}, results.data)
+    res.send({message:'Pet was added'})
   } catch(err){
     console.log(err)
     res.status(500).send(err);
-
   }
 })
 
