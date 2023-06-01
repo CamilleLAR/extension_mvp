@@ -18,7 +18,7 @@ app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/api', indexRouter);
-app.use('/api', petsRouter);
+app.use('/api/pets', petsRouter);
 
 // Anything that doesn't match the above, send back index.html
 app.get("*", (req, res) => {
