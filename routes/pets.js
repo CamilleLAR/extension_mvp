@@ -43,7 +43,7 @@ router.post("/pets", async function(req,res) {
 
 
 // EDIT/ UPDATE a pet
-router.put('/pets/:id', async (req, res) => {
+router.put('/:pet_id', async (req, res) => {
   const { pet_id } = req.params;
   const { name, type, birthdate, notes } = req.body;
 
