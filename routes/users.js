@@ -35,8 +35,8 @@ router.get("/:user_id/pets", async function(req, res) {
 
     const id = usersResults.data[0].id;
     const firstname = usersResults.data[0].firstname;
-    const lastname = usersResults.data[0].firstname;
-    const pets = petsResults.data.map(object => ({pet: object.name, id: object.id, type: object.type, DOB: object.birthdate}))
+    const lastname = usersResults.data[0].lastname;
+    const pets = petsResults.data.map(object => ({pet: object.name, type: object.type, DOB: object.birthdate, notes: object.notes}))
     const family = {id, firstname, lastname, pets}
 
     res.send(family);
