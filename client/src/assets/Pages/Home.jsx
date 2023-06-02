@@ -20,9 +20,7 @@ export default function Home() {
         <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header>
         <h1>Pet Diary 📖</h1>
         <div className="home-container">
-          <div>
             {currentForm === 'login'? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>}
-          </div>
         </div>
       </div>
     </div>

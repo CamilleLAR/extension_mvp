@@ -13,8 +13,8 @@ export const Register = (props) => {
       }
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
+        <div className="auth-form-container">
+            <form onSubmit={handleSubmit} className="register-form">
                 <label htmlFor="firstname">Firstname</label>
                 <input value={firstname} type="firstname" placeholder="firstname" id="firstname" name="firstname"/>
                 <label htmlFor="lastname">Lastname</label>
@@ -25,7 +25,7 @@ export const Register = (props) => {
                 <input value={password} type="password" placeholder="***********" id="password" name="password"/>
                 <button type="submit">Log In</button>
             </form>
-            <button onClick={() => props.onFormSwitch("login")}>Already have an account? Login here.</button>
-        </>
+            <button className="link-btn" onClick={() => props.onFormSwitch("login")}>Already have an account? Login here.</button>
+        </div>
     );
 }
