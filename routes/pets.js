@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 
 
 // GET one pet
-router.get("/pet_id", petMustExist, async function(req, res) {
+router.get("/:pet_id", petMustExist, async function(req, res) {
   const { pet_id } = req.params;
   try {
     const results = await db(`SELECT * FROM petlist WHERE id = ${pet_id};`);
@@ -29,10 +29,10 @@ router.get("/pet_id", petMustExist, async function(req, res) {
 
 //CREATE a new pet
 router.post("/", async function(req,res) {
-  const {name, type, birthdate, notes} = req.body;
+  const {name, type, birthdate, notes, user_id} = req.body;
   try{
     const results = await db(
-    `INSERT INTO petlist (name, type, birthdate, notes) VALUES("${name}","${type}","${birthdate}","${notes}");`
+    `INSERT INTO petlist (name, type, birthdate, notes, user_id) VALUES("${name}","${type}","${birthdate}","${notes}", "${user_id}");`
     );
     res.send({message:'Pet was added'})
   } catch(err){
@@ -45,7 +45,7 @@ router.post("/", async function(req,res) {
 // EDIT/ UPDATE a pet
 router.put('/:pet_id', async (req, res) => {
   const { pet_id } = req.params;
-  const { name, type, birthdate, notes } = req.body;
+  const {name, type, birthdate, notes, user_id} = req.body;
 
   try {
     let myQuery = `UPDATE petlist SET `;
@@ -60,6 +60,9 @@ router.put('/:pet_id', async (req, res) => {
     }
     if (notes) {
       myQuery += `notes = '${notes}', `;
+    }
+    if (user_id) {
+      myQuery += `user_id = '${user_id}', `;
     }
     myQuery = myQuery.slice(0, -2); // Remove the trailing comma and space
     myQuery += ` WHERE id = ${pet_id};`;

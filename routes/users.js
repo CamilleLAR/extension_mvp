@@ -25,12 +25,35 @@ router.get("/:user_id", async function(req, res) {
   }
 })
 
+
+// GET one user with their pet
+router.get("/:user_id/pets", async function(req, res) {
+  const { user_id } = req.params;
+  try {
+    const usersResults = await db(`SELECT * FROM users WHERE id = ${user_id};`);
+    const petsResults = await db(`SELECT * FROM petlist WHERE user_id = ${user_id};`)
+
+    const id = usersResults.data[0].id;
+    const firstname = usersResults.data[0].firstname;
+    const lastname = usersResults.data[0].firstname;
+    const pets = petsResults.data.map(object => ({pet: object.name, id: object.id, type: object.type, DOB: object.birthdate}))
+    const family = {id, firstname, lastname, pets}
+
+    res.send(family);
+
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
+
+
 //CREATE a new user
 router.post("/", async function(req,res) {
   const {firstname, lastname, email, password} = req.body;
   try{
     const results = await db(
-    `INSERT INTO users (firstname, lastname, registration_date, username, password) VALUES("${firstname}","${lastname}","${email}", "${password}");`
+    `INSERT INTO users (firstname, lastname, email, password) VALUES("${firstname}","${lastname}","${email}", "${password}");`
     );
     res.send({message:'User added'})
   } catch(err){
@@ -44,7 +67,7 @@ router.put('/:user_id', async (req, res) => {
   const { user_id } = req.params;
   const {firstname, lastname, email, password} = req.body;
   try {
-    const results = await db(`UPDATE users SET firstname = ("${firstname}"), firstname = ("${lastname}"), email = (${email}), password = (${password}) WHERE id = ${user_id};`);
+    const results = await db(`UPDATE users SET firstname = ("${firstname}"), lastname = ("${lastname}"), email = ("${email}"), password = ("${password}") WHERE id = ${user_id};`);
     res.send(results.data);
     } catch (err) {
     res.status(500).send(err);
@@ -55,7 +78,7 @@ router.put('/:user_id', async (req, res) => {
 router.delete("/:user_id", async (req, res) => {
   const { user_id } = req.params;
   try {
-    await db(`DELETE FROM petlist WHERE id = ${ user_id };`);
+    await db(`DELETE FROM users WHERE id = ${ user_id };`);
     res.send("User deleted");
   } catch (err) {
     res.status(500).send(err);
