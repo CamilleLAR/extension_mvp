@@ -8,7 +8,7 @@ import "./Home.css";
 export default function Home() {
   const [currentForm, setCurrentForm] = useState('login');
 
-  const toggleForm = () => {
+  const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
 
@@ -21,7 +21,7 @@ export default function Home() {
         <h1>Pet Diary 📖</h1>
         <div className="home-container">
           <div>
-            {currentForm === 'login'? <Login onFormSwitch={toggleForm}/> : <Register />}
+            {currentForm === 'login'? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>}
           </div>
         </div>
       </div>
