@@ -62,6 +62,8 @@ export const Register = (props) => {
             setErrMsg("Invalid Entry");
             return;
         }
+        console.log(user, pwd);
+        setSuccess(true);
     }
 
     return (
