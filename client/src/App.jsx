@@ -4,10 +4,13 @@ import Home from "./assets/Pages/Home";
 import Pet from "./assets/Pages/Pet";
 import Pets from "./assets/Pages/Pets";
 import AddPet from "./assets/components/AddPet";
+import { Login } from "../src/assets/Pages/Login"
+import { Register } from "../src/assets/Pages/Register"
 import "./App.css";
 
 export default function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
