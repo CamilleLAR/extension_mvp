@@ -71,15 +71,14 @@ router.put('/pets/:id', async (req, res) => {
 });
 
 // DELETE a pet
-router.delete("/pets/:id",petMustExist, async (req, res) => {
+router.delete("/:pet_id", petMustExist, async (req, res) => {
   const { pet_id } = req.params;
   try {
-    const results = await db(`DELETE FROM petlist WHERE id = ${pet_id};`);
+    await db(`DELETE FROM petlist WHERE id = ${ pet_id };`);
     res.send("Pet removed");
   } catch (err) {
     res.status(500).send(err);
   }
-  //
 });
 
 

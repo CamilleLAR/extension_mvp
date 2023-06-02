@@ -50,7 +50,7 @@ export default function Pets() {
 
   const sendRequest = async (method, id = "", options = {}) => {
     try {
-      const response = await fetch(`/api/${id}`, { method, ...options });
+      const response = await fetch(`/api/pets/${id}`, { method, ...options });
       if (!response.ok) throw new Error(response.statusText);
       await getPets();
     } catch (err) {

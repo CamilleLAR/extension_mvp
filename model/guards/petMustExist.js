@@ -3,9 +3,9 @@ const router = express.Router();
 const db = require("../helper");
 
 async function petMustExist(req, res, next) {
-  const { id } = req.params;
+  const { pet_id } = req.params;
   try {
-    const results = await db(`SELECT * FROM petlist WHERE id = ${id}`);
+    const results = await db(`SELECT * FROM petlist WHERE id = ${pet_id}`);
     if (results.data.length) {
       next();
     } else {
