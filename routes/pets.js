@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 
 
 // GET one pet
-router.get("/:id", petMustExist, async function(req, res) {
+router.get("/pets/:id", petMustExist, async function(req, res) {
   const { pet_id } = req.params;
   try {
     const results = await db(`SELECT * FROM petlist WHERE id = ${pet_id};`);
@@ -28,7 +28,7 @@ router.get("/:id", petMustExist, async function(req, res) {
 })
 
 //CREATE a new pet
-router.post("/", async function(req,res) {
+router.post("/pets", async function(req,res) {
   const {name, type, birthdate, notes} = req.body;
   try{
     const results = await db(
@@ -43,7 +43,7 @@ router.post("/", async function(req,res) {
 
 
 // EDIT/ UPDATE a pet
-router.put('/:id', async (req, res) => {
+router.put('/pets/:id', async (req, res) => {
   const { pet_id } = req.params;
   const { name, type, birthdate, notes } = req.body;
 
@@ -71,7 +71,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a pet
-router.delete("/:id",petMustExist, async (req, res) => {
+router.delete("/pets/:id",petMustExist, async (req, res) => {
   const { pet_id } = req.params;
   try {
     const results = await db(`DELETE FROM petlist WHERE id = ${pet_id};`);

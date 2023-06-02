@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import EditPet from "../components/EditPet";
+import dayjs from "dayjs";
 import "./Pets.css";
 
 export default function Pets() {
@@ -26,7 +27,7 @@ export default function Pets() {
 
   const updatePet = async (editedPet) => {
     try {
-      const response = await fetch(`/api/${editedPet.id}`, {
+      const response = await fetch(`/api/pets/${editedPet.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +79,7 @@ export default function Pets() {
                 <div className="pet-items">
                   <h2 className="card-title">{pet.name}</h2>
                   <h5>Type: {pet.type}</h5>
-                  <h6>Age: {pet.birthdate}</h6>
+                  <h6>Age: {dayjs(pet.birthdate).format("DD/MM/YYYY")}</h6>
                   <p>Notes: {pet.notes}</p>
                 </div>
               </div>

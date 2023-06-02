@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams,  } from "react-router-dom";
 import EditPet from "../components/EditPet";
+import dayjs from "dayjs";
 import "./Pet.css";
 
 function Pet() {
   const [pet, setPet] = useState({});
   const { pet_id } = useParams();
   const [editingPetId, setEditingPetId] = useState(null);
+  const shortDateFormat = dayjs(pet.birthdate).format("DD/MM/YYYY");
 
   useEffect(() => {
     loadPet();
@@ -14,7 +16,7 @@ function Pet() {
 
   async function loadPet() {
     try {
-      const response = await fetch(`/api/${pet_id}`);
+      const response = await fetch(`/api/pets/${pet_id}`);
       const data = await response.json();
       setPet(data);
     } catch (error) {
@@ -24,7 +26,7 @@ function Pet() {
 
   const updatePet = async (editedPet) => {
     try {
-      const response = await fetch(`/api/${editedPet.id}`, {
+      const response = await fetch(`/api/pets/${editedPet.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +45,7 @@ function Pet() {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/${pet.id}`, {
+      const response = await fetch(`/api/pets/${pet.id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -75,7 +77,7 @@ function Pet() {
             <div className="card-body">
               <h1 className="card-title">{pet.name}</h1>
               <h3 className="card-text">Type: {pet.type}</h3>
-              <h5 className="card-text">Birthdate: {pet.birthdate}</h5>
+              <h5 className="card-text">Birthdate: {shortDateFormat}</h5>
               <p className="card-text">Notes: {pet.notes}</p>
               <div className="btn-group" role="group" aria-label="Pet Actions">
                 {editingPetId === pet.id ? (

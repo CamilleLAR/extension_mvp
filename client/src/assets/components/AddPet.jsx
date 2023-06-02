@@ -40,7 +40,7 @@ export default function AddPet() {
 
   async function getPets() {
     try {
-      const response = await fetch("/api");
+      const response = await fetch("/api/pets");
       const data = await response.json();
       if (!response.ok) throw new Error(response.statusText);
       setPets(data);
