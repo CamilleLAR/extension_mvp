@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 
 
 // GET one pet
-router.get("/pets/:id", petMustExist, async function(req, res) {
+router.get("/pet_id", petMustExist, async function(req, res) {
   const { pet_id } = req.params;
   try {
     const results = await db(`SELECT * FROM petlist WHERE id = ${pet_id};`);
@@ -28,7 +28,7 @@ router.get("/pets/:id", petMustExist, async function(req, res) {
 })
 
 //CREATE a new pet
-router.post("/pets", async function(req,res) {
+router.post("/", async function(req,res) {
   const {name, type, birthdate, notes} = req.body;
   try{
     const results = await db(
