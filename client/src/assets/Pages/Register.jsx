@@ -9,6 +9,13 @@ export const Register = (props) => {
     const userRef = useRef();
     const errRef = useRef();
 
+    const [input, setInput] = useState({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password:"",
+    })
+
     const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
@@ -27,63 +34,79 @@ export const Register = (props) => {
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
     }, []);
 
     useEffect(() => {
-        const result = EMAIL_REGEX.test(email);
+        const result = EMAIL_REGEX.test(input.email);
         console.log(result);
-        console.log(email);
+        console.log(input.email);
         setValidEmail(result);
-    }, [email])
+    }, [input.email])
 
     useEffect(() => {
-        const result = PWD_REGEX.test(password);
+        const result = PWD_REGEX.test(input.password);
         console.log(result);
-        console.log(password);
+        console.log(input.password);
         setValidPwd(result);
-        const match = password === matchPwd;
+        const match = input.password === matchPwd;
+        console.log(match)
         setValidMatch(match);
-    }, [password, matchPwd])
+    }, [input.password, matchPwd])
 
     useEffect(() => {
         setErrMsg("");
     }, [email, password, matchPwd])
 
-    const handleSubmit = async (e) => {
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        setInput((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(password);
         if (!v1 || !v2) {
-            setErrMsg("Invalid Entry");
+            setErrMsg("Invalid password or email.");
+            setIsLoading(false);
             return;
         }
-        try {
-            let response = await fetch(`/api/users`, {
-                method: "POST",
-                body: JSON.stringify({
-                    firstname: firstname,
-                    lastname: lastname,
-                    email: email,
-                    password: password,
-                }),
-            });
-            let responseJson = await response.json();
-            if (response.status === 200) {
-                setFirstName("");
-                setLastName("");
-                setEmail("");
-                setPassword("");
-                setSuccess(true);
-            } else {
-                setErrMsg("Some error occured");
-            }
-        } catch (err) {
-            console.log(err);
+        addUser().then(() => {
+            Navigate("/login");
+        })
+    }
+        
+    const addUser = async () => {
+        const user = {
+            firstname: input.firstname,
+            lastname: input.lastname,
+            email: input.email,
+            password: input.password
+          };
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
         }
-    };       
+        try {
+            const response = await fetch("/api/users", options);
+            if (!response.ok) throw new Error(response.statusText);
+          } catch (err) {
+            setErrMsg(err.message);
+          }
+    };
         
 
     return (
@@ -97,30 +120,30 @@ export const Register = (props) => {
                     Firstname
                 </label>
                 <input
-                    type="firstname"
+                    type="text"
                     placeholder="firstname"
                     id="firstname"
                     name="firstname"
                     required
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={handleInputChange}
                 />
                 <label htmlFor="lastname">
                     Lastname
                 </label>
                 <input
-                    type="lastname"
+                    type="text"
                     placeholder="lastname"
                     id="lastname"
                     name="lastname"
                     required
-                    onChange={(e) => setLastName(e.target.value)}
+                    onChange={handleInputChange}
                 />
                 <label htmlFor="email">
                     Email address
                     <span className={validEmail ? "valid" : "hide"}>
                         <FontAwesomeIcon icon={faCheck}/>
                     </span>
-                    <span className={validEmail || !email ? "hide" : "invalid"}>
+                    <span className={!validEmail || email ? "invalid" : "hide"}>
                         <FontAwesomeIcon icon={faTimes}/>
                     </span>
                 </label>
@@ -131,7 +154,7 @@ export const Register = (props) => {
                     name="email"
                     ref={userRef}
                     autoComplete="off"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleInputChange}
                     required
                     aria-invalid={validEmail ? "false" : "true"}
                     aria-describedby="uidnote"
@@ -140,7 +163,7 @@ export const Register = (props) => {
                 />
                 <p
                     id="uidnote"
-                    className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                    className={emailFocus && !email && !validEmail ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Valid email address required. 
                 </p>
@@ -149,7 +172,7 @@ export const Register = (props) => {
                     <span className={validPwd ? "valid" : "hide"}>
                         <FontAwesomeIcon icon={faCheck} />
                     </span>
-                    <span className={validPwd || !password ? "hide" : "invalid"}>
+                    <span className={!validPwd || password ? "invalid" : "hide"}>
                         <FontAwesomeIcon icon={faTimes} />
                     </span>
                 </label>
@@ -159,7 +182,7 @@ export const Register = (props) => {
                     id="password"
                     name="password"
                     required
-                    onChange={(e) => setMatchPwd(e.target.value)}
+                    onChange={handleInputChange}
                     aria-invalid={validPwd ? "false" : "true"}
                     aria-describedby="pwdnote"
                     onFocus={() => setPwdFocus(true)}
@@ -180,7 +203,7 @@ export const Register = (props) => {
                     <span className={validMatch && matchPwd ? "valid" : "hide"}>
                         <FontAwesomeIcon icon={faCheck} />
                     </span>
-                    <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
+                    <span className={!validMatch || !matchPwd ? "invalid" : "hide"}>
                         <FontAwesomeIcon icon={faTimes} />
                     </span>
                 </label>
@@ -195,11 +218,11 @@ export const Register = (props) => {
                     onFocus={() => setMatchFocus(true)}
                     onBlur={() => setMatchFocus(false)}
                 />
-                <p id="confirm_pwd" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                <p id="confirm_pwd" className={!validMatch ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Must match the first password input field.
                 </p>
-                <button type="submit" disabled={!validEmail || !validPwd || !validMatch || !firstname || !lastname ? true : false}>
+                <button type="submit" disabled={!validEmail || !validPwd || !validMatch ? true:false}>
                     Sign up
                 </button>
             </form>

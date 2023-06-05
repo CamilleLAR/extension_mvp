@@ -82,3 +82,15 @@ button {
   color: rgba(149, 142, 58, 0.667);
   text-decoration: underline;
 }
+
+.hide {
+  display: none;
+}
+
+.offscreen {
+  display: none;
+}
+
+.instuctions {
+  display: block;
+}
