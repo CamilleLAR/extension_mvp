@@ -73,20 +73,20 @@ export const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Form submitted");
         setIsLoading(true);
-        const v1 = EMAIL_REGEX.test(email);
-        const v2 = PWD_REGEX.test(password);
+        const v1 = EMAIL_REGEX.test(input.email);
+        const v2 = PWD_REGEX.test(input.password);
         if (!v1 || !v2) {
             setErrMsg("Invalid password or email.");
             setIsLoading(false);
             return;
         }
-        addUser().then(() => {
-            Navigate("/login");
-        })
+        addUser();
     }
         
     const addUser = async () => {
+        console.log("addUser called");
         const user = {
             firstname: input.firstname,
             lastname: input.lastname,
