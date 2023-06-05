@@ -22,10 +22,8 @@ export const Register = (props) => {
     const [matchFocus, setMatchFocus] = useState(false);
 
     const [firstname, setFirstName] = useState("");
-    const [firstnameFocus, setFirstNameFocus] = useState(false);
 
     const [lastname, setLastName] = useState("");
-    const [lastnameFocus, setLastNameFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
@@ -62,9 +60,31 @@ export const Register = (props) => {
             setErrMsg("Invalid Entry");
             return;
         }
-        console.log(user, pwd);
-        setSuccess(true);
-    }
+        try {
+            let response = await fetch(`/api/users`, {
+                method: "POST",
+                body: JSON.stringify({
+                    firstname: firstname,
+                    lastname: lastname,
+                    email: email,
+                    password: password,
+                }),
+            });
+            let responseJson = await response.json();
+            if (response.status === 200) {
+                setFirstName("");
+                setLastName("");
+                setEmail("");
+                setPassword("");
+                setSuccess(true);
+            } else {
+                setErrMsg("Some error occured");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };       
+        
 
     return (
         <div className="auth-form-container">
