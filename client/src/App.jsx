@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./assets/Pages/Home";
 import Pet from "./assets/Pages/Pet";
@@ -9,11 +9,38 @@ import { Register } from "../src/assets/Pages/Register"
 import "./App.css";
 import Dashboard from "./assets/Pages/Dashboard";
 import NavBar from "./assets/components/NavBar";
+import { AuthContext } from "./context/AuthContext";
 
 export default function App() {
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage
+    if (token) {
+      setUser(true)
+    }
+  })
+
+  function login(username, password) {
+    setUser(true)
+    console.log("login")
+  }
+
+  function logout() {
+    setUser(false)
+    localStorage.removeItem(token)
+    console.log("logout")
+  }
+
+  const authObject = {
+    user,
+    login,
+    logout,
+  }
+
   return (
-    <>
+    <AuthContext.Provider value={authObject}>
       <div>
         <div>
           <NavBar/>
@@ -28,6 +55,6 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
-    </>
+    </AuthContext.Provider>
   );
 }

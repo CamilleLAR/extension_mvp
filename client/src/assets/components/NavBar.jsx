@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 export default function NavBar() {
+
+    const auth = useContext(AuthContext);
 
     const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -24,23 +27,32 @@ export default function NavBar() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`}>
-                        <ul className="navbar-nav">
-                        <li className="nav-item">
-                                <Link className="nav-link" to="/home">
-                                    Home
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/dashboard">
-                                    Dashboard
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/user_id/pets">
-                                    My Pets
-                                </Link>
-                            </li>
-                        </ul>
+                        {
+                            auth.user ? (
+                                <div>
+                                <button onClick={auth.logout}>Logout</button>
+                                <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/home">
+                                            Home
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/dashboard">
+                                            Dashboard
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/user_id/pets">
+                                            My Pets
+                                        </Link>
+                                    </li>     
+                                    </ul>
+                                </div>
+                            ) : (
+                                <link to="/login">Log In</link>
+                            )
+                        }
                     </div>
                 </div>
             </nav>

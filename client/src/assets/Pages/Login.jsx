@@ -1,12 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Login = (props) => {
 
-
+  const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
