@@ -85,7 +85,7 @@ export const Register = (props) => {
             return;
         }
         addUser()
-        navigate("/Home")
+        navigate("/dashboard")
     }
         
     const addUser = async () => {

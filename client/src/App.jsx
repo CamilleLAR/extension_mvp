@@ -7,6 +7,7 @@ import AddPet from "./assets/components/AddPet";
 import { Login } from "../src/assets/Pages/Login"
 import { Register } from "../src/assets/Pages/Register"
 import "./App.css";
+import Dashboard from "./assets/Pages/Dashboard";
 
 export default function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -51,6 +52,10 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/pets" element={<Pets />} />
           <Route path="/pets/:id" element={<Pet />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/addpet" element={<AddPet />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </>
