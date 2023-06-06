@@ -105,7 +105,7 @@ export const Register = (props) => {
             body: JSON.stringify(user),
         }
         try {
-            const response = await fetch("/api/users", options);
+            const response = await fetch("/api/register", options);
             if (!response.ok) throw new Error(response.statusText);
           } catch (err) {
             setErrMsg(err.message);

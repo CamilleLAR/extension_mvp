@@ -4,7 +4,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios"
 
-function Login() {
+export const Login = () => {
+
+  const auth = useContext(AuthContext);
 
   const [credentials, setCredentials] = useState({
     email: "test",
@@ -28,14 +30,11 @@ function Login() {
       });
 
       localStorage.setitem("token", data.token);
+      auth.login();
       console.log(data.message, data.token);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const logout = async () => {
-    localStorage.removeItem("token");
   };
 
   const requestData = async () => {
@@ -51,23 +50,23 @@ function Login() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    if (!v1 || !v2) {
-        setErrMsg("Invalid password or email.");
-        setIsLoading(false);
-        return;
-    }
-    addUser()
-    navigate("/dashboard")
-    setIsLoading(false);
-}
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     setIsLoading(true);
+//     if (!v1 || !v2) {
+//         setErrMsg("Invalid password or email.");
+//         setIsLoading(false);
+//         return;
+//     }
+//     addUser()
+//     navigate("/dashboard")
+//     setIsLoading(false);
+// }
 
 
   return (
     <div className="auth-form-container">
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={login} className="login-form">
         <label htmlFor="email">
           Username
         </label>
@@ -97,3 +96,4 @@ function Login() {
   );
 
 }
+ 

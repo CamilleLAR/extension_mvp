@@ -20,9 +20,9 @@ export default function App() {
     if (token) {
       setUser(true)
     }
-  })
+  }, []);
 
-  function login(username, password) {
+  function login(email, password) {
     setUser(true)
     console.log("login")
   }
@@ -46,13 +46,19 @@ export default function App() {
           <NavBar/>
         </div>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/pets" element={<Pets />} />
-          <Route path="/pets/:id" element={<Pet />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addpet" element={<AddPet />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/private"
+            element={
+              <RequireAuth>
+                <Dashboard />
+                <Pets />
+                <Pet />
+                <AddPet />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </div>
     </AuthContext.Provider>
