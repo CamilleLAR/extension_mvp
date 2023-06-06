@@ -27,15 +27,17 @@ function Login(props) {
       const { data } = await axios("/api/auth/login", {
         method: "POST",
         data: credentials,
-        timeout: 5000,
+        // timeout: 30000,
       });
+
+      // console.log(data);
 
       localStorage.setItem("token", data.token);
       auth.login();
       navigate ("/dashboard")
       console.log(data.message, data.token);
     } catch (err) {
-      console.log(err);
+      console.log("Error:", err);
     }
   };
 
