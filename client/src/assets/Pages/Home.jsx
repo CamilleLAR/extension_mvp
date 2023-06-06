@@ -1,11 +1,10 @@
 import React from "react";
 import {useState} from "react";
-import AddPet from "../components/AddPet.jsx";
 import {Login} from "./Login.jsx"
 import {Register} from "./Register.jsx"
 import "./Home.css";
 
-export default function Home() {
+function Home() {
   const [currentForm, setCurrentForm] = useState('login');
 
   const toggleForm = (formName) => {
@@ -26,3 +25,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

@@ -8,10 +8,10 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    getUserPets();
+    getUsersPets();
   }, []);
 
-    const getUserPets = async () => {
+    const getUsersPets = async () => {
         try {
           const { data } = await axios("api/auth/pets", {
             headers: {

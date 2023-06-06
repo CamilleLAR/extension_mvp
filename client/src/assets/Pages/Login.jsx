@@ -1,19 +1,19 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 import axios from "axios"
 
-export const Login = () => {
+function Login() {
 
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
     email: "test",
     password: "test",
   });
   
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
 
   const { email, password } = credentials;
   
@@ -31,24 +31,24 @@ export const Login = () => {
 
       localStorage.setitem("token", data.token);
       auth.login();
-      console.log(data.message, data.token);
+      navigate ("/dashboard")
     } catch (err) {
       console.log(err);
     }
   };
 
-  const requestData = async () => {
-    try {
-      const { data } = await axios("api/auth/dashboard", {
-        headers: {
-          authorisation: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      console.log(data.message);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const requestData = async () => {
+  //   try {
+  //     const { data } = await axios("api/auth/dashboard", {
+  //       headers: {
+  //         authorisation: "Bearer " + localStorage.getItem("token"),
+  //       },
+  //     });
+  //     console.log(data.message);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
@@ -96,4 +96,5 @@ export const Login = () => {
   );
 
 }
- 
+
+export default Login;
