@@ -8,46 +8,16 @@ import { Login } from "../src/assets/Pages/Login"
 import { Register } from "../src/assets/Pages/Register"
 import "./App.css";
 import Dashboard from "./assets/Pages/Dashboard";
+import NavBar from "./assets/components/NavBar";
 
 export default function App() {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
-  };
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            Pet Diary📖
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            onClick={toggleNav}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`}>
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/pets">
-                  My Pets
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
       <div>
+        <div>
+          <NavBar/>
+        </div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pets" element={<Pets />} />

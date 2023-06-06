@@ -86,6 +86,7 @@ export const Register = (props) => {
         }
         addUser()
         navigate("/dashboard")
+        setIsLoading(false);
     }
         
     const addUser = async () => {

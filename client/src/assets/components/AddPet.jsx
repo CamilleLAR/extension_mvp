@@ -36,7 +36,7 @@ export default function AddPet() {
       getPets();
       navigate("/pets"); // Navigate to Pets page
     });
-  };
+  }
 
   async function getPets() {
     try {

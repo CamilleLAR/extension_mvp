@@ -10,8 +10,16 @@ export const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
-  }
+    setIsLoading(true);
+    if (!v1 || !v2) {
+        setErrMsg("Invalid password or email.");
+        setIsLoading(false);
+        return;
+    }
+    addUser()
+    navigate("/dashboard")
+    setIsLoading(false);
+}
 
 
   return (
