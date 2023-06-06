@@ -6,6 +6,8 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const userShouldBeLoggedIn = require("../model/guards/userShouldBeLoggedIn");
+
 const supersecret = process.env.SUPER_SECRET;
 
 router.post("/register", async (req, res) => {
@@ -48,8 +50,11 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// router.post("/profile", async (req, res) => {
-
-// })
+router.post("/dashboard", userShouldBeLoggedIn, (req, res) => {
+    res.send({
+        message: "You are logged in.",
+        user_id: req.user_id,
+    })
+})
 
 module.exports = router;

@@ -2,14 +2,54 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import axios from "axios"
 
-export const Login = (props) => {
+function Login() {
 
-  const auth = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [credentials, setCredentials] = useState({
+    email: "test",
+    password: "test",
+  });
   
+  const [data, setData] = useState(null);
+
+  const { email, password } = credentials;
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const login = async () => {
+    try {
+      const { data } = await axios("/api/auth/login", {
+        method: "POST",
+        data: credentials,
+      });
+
+      localStorage.setitem("token", data.token);
+      console.log(data.message, data.token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const logout = async () => {
+    localStorage.removeItem("token");
+  };
+
+  const requestData = async () => {
+    try {
+      const { data } = await axios("api/auth/dashboard", {
+        headers: {
+          authorisation: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      console.log(data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +77,7 @@ export const Login = (props) => {
           placeholder="youremail@domain.com"
           id="email"
           name="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
         />
         <label htmlFor="password">
           Password
@@ -48,7 +88,7 @@ export const Login = (props) => {
           placeholder="***********"
           id="password"
           name="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
         />
         <button type="submit">Log In</button>
       </form>
