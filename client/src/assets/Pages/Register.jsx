@@ -86,7 +86,7 @@ function Register(props) {
         }
         addUser()
         .then(() => {
-          navigate("/login");
+          navigate("/home");
           setIsLoading(false);
         })
         .catch((err) => {

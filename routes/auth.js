@@ -1,12 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require("jsonwebtoken");
-const db = require("../model/helper");
+var express = require("express");
+var router = express.Router();
+var jwt = require("jsonwebtoken");
+var userShouldBeLoggedIn = require("../model/guards/userShouldBeLoggedIn");
+var db = require("../model/helper");
 require("dotenv").config();
-const bcrypt = require("bcrypt");
+var bcrypt = require("bcrypt");
 const saltRounds = 10;
-
-const userShouldBeLoggedIn = require("../model/guards/userShouldBeLoggedIn");
 
 const supersecret = process.env.SUPER_SECRET;
 
@@ -19,7 +18,7 @@ router.post("/register", async (req, res) => {
         await db(
             `INSERT INTO users (firstname, lastname, email, password) VALUES("${firstname}","${lastname}","${email}", "${hash}");`
         );
-        res, send({ message: "You are now registered." });
+        res.send({ message: "You are now registered." });
     } catch (err) {
         res.status(400).send({ message: err.message });
     }
@@ -27,34 +26,33 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
-
+  
     try {
-        const results = await db(
-            `SELECT * FROM users WHERE username = "${email}"`
-        );
-        const user = results.data[0];
-        if (user) {
-            const user_id = user.id;
-
-            const correctPassword = await bcrypt.compare(password, user.password);
-
-            if (!correctPassword) throw new Error("Incorrect password");
-
-            let token = jwt.sign({ user_id }, supersecret);
-            res.send({ message: "Login successful" });
-        } else {
-            throw new Error("User does not exist");
-        }
+      const results = await db(
+        `SELECT * FROM users WHERE email = "${email}"`
+      );
+      const user = results.data[0];
+      if (user) {
+        const user_id = user.id;
+  
+        const correctPassword = await bcrypt.compare(password, user.password);
+  
+        if (!correctPassword) throw new Error("Incorrect password");
+  
+        var token = jwt.sign({ user_id }, supersecret);
+        res.send({ message: "Login successful, here is your token", token });
+      } else {
+        throw new Error("User does not exist");
+      }
     } catch (err) {
-        res.status(400).send({ message: err.mesage });
+      res.status(400).send({ message: err.message });
     }
-});
+  });
 
-router.post("/dashboard", userShouldBeLoggedIn, (req, res, next) => {
+  router.get("/profile", userShouldBeLoggedIn, (req, res) => {
     res.send({
-        message: "You are logged in.",
-        user_id: req.user_id,
+      message: "Here is the PROTECTED data for user " + req.user_id,
     });
-});
+  });
 
 module.exports = router;

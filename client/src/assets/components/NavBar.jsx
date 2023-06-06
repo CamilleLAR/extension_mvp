@@ -12,6 +12,10 @@ export default function NavBar() {
       setIsNavOpen(!isNavOpen);
     };
 
+    const logout = () => {
+        auth.logout();
+      };
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -29,7 +33,7 @@ export default function NavBar() {
                     <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`}>
                         { auth.user ? (
                         <div>
-                            <button onClick={auth.logout}>Logout</button>
+                            <button onClick={logout}>Logout</button>
                             <ul className="navbar-nav">
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/home">
@@ -47,6 +51,7 @@ export default function NavBar() {
                                     </Link>
                                 </li>     
                             </ul>
+                            <button></button>
                         </div>
                         ) : (
                             <div></div>

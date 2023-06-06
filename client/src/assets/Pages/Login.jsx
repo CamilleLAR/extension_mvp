@@ -27,11 +27,13 @@ function Login(props) {
       const { data } = await axios("/api/auth/login", {
         method: "POST",
         data: credentials,
+        timeout: 5000,
       });
 
-      localStorage.setitem("token", data.token);
+      localStorage.setItem("token", data.token);
       auth.login();
       navigate ("/dashboard")
+      console.log(data.message, data.token);
     } catch (err) {
       console.log(err);
     }
@@ -39,42 +41,29 @@ function Login(props) {
 
   // const requestData = async () => {
   //   try {
-  //     const { data } = await axios("api/auth/dashboard", {
+  //     const { data } = await axios("/api/auth/profile", {
   //       headers: {
-  //         authorisation: "Bearer " + localStorage.getItem("token"),
+  //         authorization: "Bearer " + localStorage.getItem("token"),
   //       },
   //     });
+  
   //     console.log(data.message);
-  //   } catch (err) {
-  //     console.log(err);
+  //   } catch (error) {
+  //     console.log(error);
   //   }
   // };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     setIsLoading(true);
-//     if (!v1 || !v2) {
-//         setErrMsg("Invalid password or email.");
-//         setIsLoading(false);
-//         return;
-//     }
-//     addUser()
-//     navigate("/dashboard")
-//     setIsLoading(false);
-// }
 
 
   return (
     <div className="auth-form-container">
       <form onSubmit={login} className="login-form">
         <label htmlFor="email">
-          Username
+          Email
         </label>
         <input
           value={email}
           type="email"
           placeholder="youremail@domain.com"
-          id="email"
           name="email"
           onChange={handleChange}
         />
@@ -83,10 +72,9 @@ function Login(props) {
         </label>
         <input
           value={password}
+          name="password"
           type="password"
           placeholder="***********"
-          id="password"
-          name="password"
           onChange={handleChange}
         />
         <button type="submit">Log In</button>
