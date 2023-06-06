@@ -3,10 +3,10 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-export const Register = (props) => {
+function Register(props) {
+    const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
     const navigate = useNavigate();
     const userRef = useRef();
     const errRef = useRef();
@@ -85,12 +85,18 @@ export const Register = (props) => {
             return;
         }
         addUser()
-        navigate("/dashboard")
-        setIsLoading(false);
-    }
+        .then(() => {
+          navigate("/login");
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setErrMsg(err.message);
+          setIsLoading(false);
+        });
+    };
         
     const addUser = async () => {
-        console.log("addUser called");
+        // console.log("addUser called");
         const user = {
             firstname: input.firstname,
             lastname: input.lastname,
@@ -105,7 +111,7 @@ export const Register = (props) => {
             body: JSON.stringify(user),
         }
         try {
-            const response = await fetch("/api/register", options);
+            const response = await fetch("/api/auth/register", options);
             if (!response.ok) throw new Error(response.statusText);
           } catch (err) {
             setErrMsg(err.message);
@@ -238,3 +244,5 @@ export const Register = (props) => {
         </div>
     );
 }
+
+export default Register;

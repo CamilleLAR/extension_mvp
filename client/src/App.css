@@ -94,3 +94,8 @@ button {
 .instuctions {
   display: block;
 }
+
+.navbar {
+  max-height: 10%; 
+  align-content: center;
+}

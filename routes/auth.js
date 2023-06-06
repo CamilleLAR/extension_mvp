@@ -50,11 +50,11 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/dashboard", userShouldBeLoggedIn, (req, res) => {
+router.post("/dashboard", userShouldBeLoggedIn, (req, res, next) => {
     res.send({
         message: "You are logged in.",
         user_id: req.user_id,
-    })
-})
+    });
+});
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from "react";
-import {Login} from "./Login.jsx"
-import {Register} from "./Register.jsx"
+import Login from "./Login.jsx";
+import Register from "./Register.jsx";
 import "./Home.css";
 
 function Home() {
@@ -10,7 +10,6 @@ function Home() {
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
-
 
   return (
     <div  className="container-fluid">

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import AuthContext from "../contexts/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
 
-export default function RequireAuth({ children }) {
+function RequireAuth({ children }) {
   const [loading, setLoading] = useState(true);
 
   const auth = useContext(AuthContext);
@@ -26,6 +26,10 @@ export default function RequireAuth({ children }) {
   } else if (loading) {
     return <div>Loading...</div>;
   }
-  return <div>{children}</div>;
+
+  return (
+    <div>{children}</div>
+  );
 }
 
+export default RequireAuth;

@@ -1,22 +1,23 @@
+import "./App.css";
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./assets/Pages/Home";
 import Pet from "./assets/Pages/Pet";
 import Pets from "./assets/Pages/Pets";
 import AddPet from "./assets/components/AddPet";
-import { Login } from "../src/assets/Pages/Login"
-import { Register } from "../src/assets/Pages/Register"
-import "./App.css";
+import Login from "./assets/Pages/Login"
+import Register from "./assets/Pages/Register"
 import Dashboard from "./assets/Pages/Dashboard";
 import NavBar from "./assets/components/NavBar";
-import { AuthContext } from "./context/AuthContext";
+import AuthContext from "./context/AuthContext";
+import RequireAuth from "./assets/components/RequireAuth";
 
-export default function App() {
+function App() {
 
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage
+    const token = localStorage.getItem("token");
     if (token) {
       setUser(true)
     }
@@ -64,3 +65,5 @@ export default function App() {
     </AuthContext.Provider>
   );
 }
+
+export default App;

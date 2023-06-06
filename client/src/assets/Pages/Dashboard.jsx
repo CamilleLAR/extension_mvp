@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-export default function Dashboard() {
+function Dashboard() {
 
   const [data, setData] = useState(null);
 
@@ -34,3 +34,4 @@ export default function Dashboard() {
     );
 };
 
+export default Dashboard;

@@ -42,14 +42,14 @@ export default function NavBar() {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/user_id/pets">
+                                    <Link className="nav-link" to="/pets">
                                         My Pets
                                     </Link>
                                 </li>     
                             </ul>
                         </div>
                         ) : (
-                            <link to="/login">Log In</link>
+                            <div></div>
                         )}
                     </div>
                 </div>
