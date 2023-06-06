@@ -8,6 +8,7 @@ const createError = require("http-errors");
 const indexRouter = require('./routes/index');
 const petsRouter = require('./routes/pets');
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use('/api', indexRouter);
 app.use('/api/pets', petsRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
 
 
 // Anything that doesn't match the above, send back index.html
