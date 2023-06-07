@@ -16,17 +16,20 @@ router.get('/', userShouldBeLoggedIn, (req, res) => {
 
 
 // GET one pet
-router.get("/:pet_id", petMustExist, async function(req, res) {
-  const { pet_id } = req.params;
+router.get("/pet/:id", petMustExist, userShouldBeLoggedIn, async function(req, res) {
+  const petId = req.params.id; // Get the pet ID from the URL parameter
+
   try {
-    const results = await db(`SELECT * FROM petlist WHERE id = ${pet_id};`);
+    const results = await db(`SELECT * FROM petlist WHERE id = ${petId};`);
     if (results.data.length) {
       res.send(results.data[0]);
-    } else res.status(404).send({ message: "Pet was not found" });
+    } else {
+      res.status(404).send({ message: "Pet was not found" });
+    }
   } catch (err) {
     res.status(500).send(err);
   }
-})
+});
 
 //CREATE a new pet
 router.post("/", async function(req,res) {

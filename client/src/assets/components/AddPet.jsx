@@ -77,7 +77,9 @@ export default function AddPet() {
 
   return (
     <div className="container-fluid">
-      <h4>Add your pet 🖋️</h4>
+      <br /><br /><br />
+      <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header><br/>
+      <h1>Add your pet 🖋️</h1>
       <div className="form-container border p-5">
         <div className="container">
           <form onSubmit={handleSubmit}>
@@ -147,7 +149,7 @@ export default function AddPet() {
             </button>
           </form>
           <br />
-          {error && <div>{error}</div>}
+          {/* {error && <div>{error}</div>} */}
         </div>
       </div>
     </div>

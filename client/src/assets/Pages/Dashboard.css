@@ -1,0 +1,17 @@
+h1 {
+    font-size: 36px;
+    margin-bottom: 50px;
+    color:#84A98C;
+} 
+  
+.navLinks {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.db-nav-link {
+    color: #84A98C;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
