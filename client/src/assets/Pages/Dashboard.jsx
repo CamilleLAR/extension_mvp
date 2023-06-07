@@ -26,7 +26,7 @@ function Dashboard() {
       if (response.ok) {
         const data = await response.json();
         setUser(data);
-        console.log(user)
+        // console.log(data)
       } else {
         throw new Error(response.statusText);
       }
@@ -54,9 +54,15 @@ function Dashboard() {
           </div>
           <div className="profile-info">
             <h2>User Information:</h2>
-            <p>First Name: {firstname}</p>
-            <p>Last Name: {lastname}</p>
-            <p>Email: {email}</p>
+            {user.map((obj) => (
+              <div>
+                  <p>First Name: {obj.firstname}</p>
+                  <p>Last Name: {obj.lastname}</p>
+                  <p>Email: {obj.email}</p>
+              </div>
+            )
+          )}
+
           </div>
         </div>
         <div className="navLinks">
@@ -70,7 +76,7 @@ function Dashboard() {
             className="db-nav-link"
             to="/private/addpet"
           >
-            Add a pet
+           🖋️ Add a pet 🖋️
           </Link>
         </div>
       </div>

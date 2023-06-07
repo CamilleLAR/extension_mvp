@@ -24,7 +24,7 @@ export default function Pets(props) {
         const data = await response.json();
         if (!response.ok) throw new Error(response.statusText);
         setPets(data);
-        console.log(pets);
+        // console.log(pets);
     } catch (err) {
       setError(err.message);
     }
