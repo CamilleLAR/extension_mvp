@@ -49,10 +49,12 @@ router.post("/login", async (req, res) => {
     }
   });
 
-  router.get("/profile", userShouldBeLoggedIn, (req, res) => {
-    res.send({
-      message: "Here is the PROTECTED data for user " + req.user_id,
-    });
+  router.get("/pets", userShouldBeLoggedIn, (req, res) => {
+    db("SELECT * FROM petlist;")
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
   });
 
 module.exports = router;

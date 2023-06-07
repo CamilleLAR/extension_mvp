@@ -22,15 +22,13 @@ function Login(props) {
     setCredentials({ ...credentials, [name]: value });
   };
 
-  const login = async () => {
+  const login = async (e) => {
+    e.preventDefault();
     try {
       const { data } = await axios("/api/auth/login", {
         method: "POST",
         data: credentials,
-        // timeout: 30000,
       });
-
-      // console.log(data);
 
       localStorage.setItem("token", data.token);
       auth.login();
@@ -43,7 +41,7 @@ function Login(props) {
 
   // const requestData = async () => {
   //   try {
-  //     const { data } = await axios("/api/auth/profile", {
+  //     const { data } = await axios("/api/auth/dashboard", {
   //       headers: {
   //         authorization: "Bearer " + localStorage.getItem("token"),
   //       },

@@ -33,13 +33,7 @@ export default function NavBar() {
                     <div className={`collapse navbar-collapse ${isNavOpen ? 'show' : ''}`}>
                         { auth.user ? (
                         <div>
-                            <button onClick={logout}>Logout</button>
                             <ul className="navbar-nav">
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/home">
-                                        Home
-                                    </Link>
-                                </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/dashboard">
                                         Dashboard
@@ -51,7 +45,7 @@ export default function NavBar() {
                                     </Link>
                                 </li>     
                             </ul>
-                            <button></button>
+                            <button onClick={logout} className="logoutBtn">Logout</button>
                         </div>
                         ) : (
                             <div></div>

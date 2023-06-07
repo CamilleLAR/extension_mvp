@@ -1,12 +1,12 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./assets/Pages/Home";
 import Pet from "./assets/Pages/Pet";
 import Pets from "./assets/Pages/Pets";
 import AddPet from "./assets/components/AddPet";
-import Login from "./assets/Pages/Login"
-import Register from "./assets/Pages/Register"
+import Login from "./assets/Pages/Login";
+import Register from "./assets/Pages/Register";
 import Dashboard from "./assets/Pages/Dashboard";
 import NavBar from "./assets/components/NavBar";
 import AuthContext from "./context/AuthContext";
@@ -41,22 +41,23 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={authObject}>
+  <AuthContext.Provider value={authObject}>
       <div>
         <div>
-          <NavBar/>
+          <NavBar />
         </div>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
-          <Route path="/private"
+          <Route
+            path="/private"
             element={
               <RequireAuth>
-                <Dashboard />
-                <Pets />
-                <Pet />
-                <AddPet />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/pets" element={<Pets />} />
+                <Route path="/pet" element={<Pet />} />
+                <Route path="/addpet" element={<AddPet />} />
               </RequireAuth>
             }
           />
