@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import EditPet from "../components/EditPet";
 import dayjs from "dayjs";
 import "./Pets.css";
@@ -9,7 +9,7 @@ export default function Pets(props) {
   const [error, setError] = useState(null);
   const [editingPetId, setEditingPetId] = useState(null);
   const navigate = useNavigate();
-
+  const { id } = useParams();
 
   useEffect(() => {
     getPets();
@@ -31,41 +31,8 @@ export default function Pets(props) {
     }
   }
 
-  const updatePet = async (editedPet) => {
-    try {
-      const response = await fetch(`/api/pets/${editedPet.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedPet),
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      getPets();
-      setEditingPetId(null);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const deletePet = async (id) => {
-    sendRequest("DELETE", id).then(getPets);
-  };
-
-  const sendRequest = async (method, id = "", options = {}) => {
-    try {
-      const response = await fetch(`/api/pets/${id}`, { method, ...options });
-      if (!response.ok) throw new Error(response.statusText);
-      await getPets();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
   const showPetPage = (id) => {
-    navigate(`/private/pets/${pets[0].id}`);
+    navigate(`/private/pets/${id}`);
   };
 
   return (
@@ -97,18 +64,6 @@ export default function Pets(props) {
                     <EditPet pet={pet} updatePet={updatePet} />
                   ) : (
                     <span>
-                      <button
-                        className="btn btn-outline-info btn-sm"
-                        onClick={() => setEditingPetId(pet.id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-outline-danger btn-sm"
-                        onClick={() => deletePet(pet.id)}
-                      >
-                        Delete
-                      </button>
                       <button
                         className="btn btn-outline-success btn-sm"
                         onClick={() => showPetPage(pet.id)}
