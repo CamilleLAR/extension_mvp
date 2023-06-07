@@ -14,6 +14,8 @@ export default function NavBar() {
 
     const logout = () => {
         auth.logout();
+        setUser(false);
+        localStorage.removeItem("token");
       };
 
     return (
@@ -35,12 +37,12 @@ export default function NavBar() {
                         <div>
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/dashboard">
+                                    <Link className="nav-link" to="/private">
                                         Dashboard
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/pets">
+                                    <Link className="nav-link" to="/private/pets">
                                         My Pets
                                     </Link>
                                 </li>     

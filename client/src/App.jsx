@@ -15,6 +15,7 @@ import RequireAuth from "./assets/components/RequireAuth";
 function App() {
 
   const [user, setUser] = useState(null);
+  const [user_id, setUser_id] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -54,10 +55,31 @@ function App() {
             path="/private"
             element={
               <RequireAuth>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/pets" element={<Pets />} />
-                <Route path="/pet" element={<Pet />} />
-                <Route path="/addpet" element={<AddPet />} />
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/private/pets"
+            element={
+              <RequireAuth>
+                <Pets />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/private/pets/:id"
+            element={
+              <RequireAuth>
+                <Pet />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/private/addpet"
+            element={
+              <RequireAuth>
+                <AddPet />
               </RequireAuth>
             }
           />

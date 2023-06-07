@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../model/helper");
+const userShouldBeLoggedIn = require("../model/guards/userShouldBeLoggedIn");
+
 
 // GET users listing
-router.get('/', function(req, res) {
-  db("SELECT * FROM users;")
+router.get('/', userShouldBeLoggedIn, function(req, res) {
+  db(`SELECT * FROM users WHERE user_id=${req.user_id};`)
     .then(results => {
       res.send(results.data);
     })

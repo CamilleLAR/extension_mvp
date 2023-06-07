@@ -86,7 +86,7 @@ function Register(props) {
         }
         addUser()
         .then(() => {
-          navigate("/dashboard");
+          navigate("/private");
           setIsLoading(false);
         })
         .catch((err) => {

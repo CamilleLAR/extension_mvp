@@ -32,26 +32,12 @@ function Login(props) {
 
       localStorage.setItem("token", data.token);
       auth.login();
-      navigate ("/dashboard")
+      navigate ("/private")
       console.log(data.message, data.token);
     } catch (err) {
       console.log("Error:", err);
     }
   };
-
-  // const requestData = async () => {
-  //   try {
-  //     const { data } = await axios("/api/auth/dashboard", {
-  //       headers: {
-  //         authorization: "Bearer " + localStorage.getItem("token"),
-  //       },
-  //     });
-  
-  //     console.log(data.message);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
 
   return (

@@ -4,11 +4,12 @@ import EditPet from "../components/EditPet";
 import dayjs from "dayjs";
 import "./Pets.css";
 
-export default function Pets() {
+export default function Pets(props) {
   const [pets, setPets] = useState([]);
   const [error, setError] = useState(null);
   const [editingPetId, setEditingPetId] = useState(null);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     getPets();
@@ -16,10 +17,15 @@ export default function Pets() {
 
   async function getPets() {
     try {
-      const response = await fetch("/api/pets");
-      const data = await response.json();
-      if (!response.ok) throw new Error(response.statusText);
-      setPets(data);
+      const response = await fetch(`/api/pets`, {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+        const data = await response.json();
+        if (!response.ok) throw new Error(response.statusText);
+        setPets(data);
+        console.log(data);
     } catch (err) {
       setError(err.message);
     }
@@ -59,7 +65,7 @@ export default function Pets() {
   };
 
   const showPetPage = (id) => {
-    navigate(`/pets/${id}`);
+    navigate(`/api/pets/${id}`);
   };
 
   return (
@@ -69,51 +75,53 @@ export default function Pets() {
       <h1 className="text-center">My Pets 🐾</h1><br />
 
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        {pets.map((pet) => (
-          <div key={pet.id} className="col-3">
-            <Link to={`/pets/${pet.id}`} className="card text-decoration-none">
-              <div className="card-body">
-                <div className="pet-image">
-                  <img src="/rabbit.png" alt="Pet" className="img-fluid" />
-                </div>
-                <div className="pet-items">
-                  <h2 className="card-title">{pet.name}</h2>
-                  <h5>Type: {pet.type}</h5>
-                  <h6>Age: {dayjs(pet.birthdate).format("DD/MM/YYYY")}</h6>
-                  <p>Notes: {pet.notes}</p>
+        {pets ?
+          (
+            pets.map((pet) => (
+              <div key={pet.id} className="col-3">
+                <Link to={`/pets/${pet.id}`} className="card text-decoration-none">
+                  <div className="card-body">
+                    <div className="pet-image">
+                      <img src="/rabbit.png" alt="Pet" className="img-fluid" />
+                    </div>
+                    <div className="pet-items">
+                      <h2 className="card-title">{pet.name}</h2>
+                      <h5>Type: {pet.type}</h5>
+                      <h6>Age: {dayjs(pet.birthdate).format("DD/MM/YYYY")}</h6>
+                      <p>Notes: {pet.notes}</p>
+                    </div>
+                  </div>
+                </Link>
+                <div className="button-group">
+                  {editingPetId === pet.id ? (
+                    <EditPet pet={pet} updatePet={updatePet} />
+                  ) : (
+                    <span>
+                      <button
+                        className="btn btn-outline-info btn-sm"
+                        onClick={() => setEditingPetId(pet.id)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-outline-danger btn-sm"
+                        onClick={() => deletePet(pet.id)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="btn btn-outline-success btn-sm"
+                        onClick={() => showPetPage(pet.id)}
+                      >
+                        Go To Profile
+                      </button>
+                    </span>
+                  )}
                 </div>
               </div>
-            </Link>
-            <div className="button-group">
-              {editingPetId === pet.id ? (
-                <EditPet pet={pet} updatePet={updatePet} />
-              ) : (
-                <span>
-                  <button
-                    className="btn btn-outline-info btn-sm"
-                    onClick={() => setEditingPetId(pet.id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={() => deletePet(pet.id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="btn btn-outline-success btn-sm"
-                    onClick={() => showPetPage(pet.id)}
-                  >
-                    Go To Profile
-                  </button>
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
+            ))
+          ):null}
       </div>
-
       <div>
         <Outlet />
       </div>

@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const db = require("../model/helper");
 const petMustExist = require("../model/guards/petMustExist");
+const userShouldBeLoggedIn = require("../model/guards/userShouldBeLoggedIn");
 
 
 // Get pet list
-router.get('/', function(req, res) {
-  db("SELECT * FROM petlist;")
+router.get('/', userShouldBeLoggedIn, (req, res) => {
+  db(`SELECT * FROM petlist WHERE user_id=${req.user_id};`)
     .then(results => {
       res.send(results.data);
     })
