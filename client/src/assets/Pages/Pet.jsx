@@ -17,7 +17,7 @@ function Pet() {
   async function loadPet() {
     try {
       const petId = pet.id
-      const response = await fetch(`/api/pet/:petId`, {
+      const response = await fetch(`/api/pet/${petId}`, {
         headers: {
           authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -40,6 +40,7 @@ function Pet() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(editedPet),
       });
@@ -57,6 +58,9 @@ function Pet() {
     try {
       const response = await fetch(`/api/pets/${pet.id}`, {
         method: "DELETE",
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
       if (!response.ok) {
         throw new Error(response.statusText);

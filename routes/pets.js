@@ -32,11 +32,11 @@ router.get("/pet/:id", petMustExist, userShouldBeLoggedIn, async function(req, r
 });
 
 //CREATE a new pet
-router.post("/", async function(req,res) {
+router.post("/", userShouldBeLoggedIn, async function(req,res) {
   const {name, type, birthdate, notes, user_id} = req.body;
   try{
     const results = await db(
-    `INSERT INTO petlist (name, type, birthdate, notes, user_id) VALUES("${name}","${type}","${birthdate}","${notes}", "${user_id}");`
+    `INSERT INTO petlist (name, type, birthdate, notes, user_id) VALUES("${name}","${type}","${birthdate}","${notes}", "${req.user_id}");`
     );
     res.send({message:'Pet was added'})
   } catch(err){
@@ -47,7 +47,7 @@ router.post("/", async function(req,res) {
 
 
 // EDIT/ UPDATE a pet
-router.put('/:pet_id', async (req, res) => {
+router.put('/:pet_id', userShouldBeLoggedIn, async (req, res) => {
   const { pet_id } = req.params;
   const {name, type, birthdate, notes, user_id} = req.body;
 
@@ -78,7 +78,7 @@ router.put('/:pet_id', async (req, res) => {
 });
 
 // DELETE a pet
-router.delete("/:pet_id", petMustExist, async (req, res) => {
+router.delete("/:pet_id", petMustExist, userShouldBeLoggedIn, async (req, res) => {
   const { pet_id } = req.params;
   try {
     await db(`DELETE FROM petlist WHERE id = ${ pet_id };`);
