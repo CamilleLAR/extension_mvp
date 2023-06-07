@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import EditPet from "../components/EditPet";
 import dayjs from "dayjs";
 import "./Pet.css";
@@ -9,6 +9,8 @@ function Pet() {
   const [editingPetId, setEditingPetId] = useState(null);
   const shortDateFormat = dayjs(pet.birthdate).format("DD/MM/YYYY");
   const { id } = useParams();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     loadPet();
@@ -46,6 +48,7 @@ function Pet() {
       if (response.ok) {
         const data = await response.json();
         setEditingPetId(null);
+        loadPet();
       } else {
         console.log("Error:", response.status);
       }
@@ -77,7 +80,6 @@ function Pet() {
     <div><br></br><br></br><br></br>
     <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header>
     <div className="container">
-      
       <h1>{pet.name}'s Profile🧸</h1>
       <div className="row">
         <div className="col-lg-4">
