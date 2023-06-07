@@ -150,7 +150,6 @@ export default function AddPet() {
             </button>
           </form>
           <br />
-          {/* {error && <div>{error}</div>} */}
         </div>
       </div>
     </div>

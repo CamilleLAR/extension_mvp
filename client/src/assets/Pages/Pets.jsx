@@ -25,7 +25,7 @@ export default function Pets(props) {
         const data = await response.json();
         if (!response.ok) throw new Error(response.statusText);
         setPets(data);
-        // console.log(data);
+        console.log(pets);
     } catch (err) {
       setError(err.message);
     }
@@ -65,7 +65,7 @@ export default function Pets(props) {
   };
 
   const showPetPage = (id) => {
-    navigate(`/private/pets/${id}`);
+    navigate(`/private/pets/${pets[0].id}`);
   };
 
   return (

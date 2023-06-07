@@ -16,11 +16,10 @@ router.get('/', userShouldBeLoggedIn, (req, res) => {
 
 
 // GET one pet
-router.get("/pet/:id", petMustExist, userShouldBeLoggedIn, async function(req, res) {
+router.get("/:id", userShouldBeLoggedIn, async function(req, res) {
   const petId = req.params.id; // Get the pet ID from the URL parameter
-
   try {
-    const results = await db(`SELECT * FROM petlist WHERE id = ${petId};`);
+    const results = await db(`SELECT * FROM petlist WHERE user_id=${req.user_id} AND id = ${petId};`);
     if (results.data.length) {
       res.send(results.data[0]);
     } else {
@@ -33,7 +32,7 @@ router.get("/pet/:id", petMustExist, userShouldBeLoggedIn, async function(req, r
 
 //CREATE a new pet
 router.post("/", userShouldBeLoggedIn, async function(req,res) {
-  const {name, type, birthdate, notes, user_id} = req.body;
+  const {name, type, birthdate, notes} = req.body;
   try{
     const results = await db(
     `INSERT INTO petlist (name, type, birthdate, notes, user_id) VALUES("${name}","${type}","${birthdate}","${notes}", "${req.user_id}");`
@@ -49,7 +48,7 @@ router.post("/", userShouldBeLoggedIn, async function(req,res) {
 // EDIT/ UPDATE a pet
 router.put('/:pet_id', userShouldBeLoggedIn, async (req, res) => {
   const { pet_id } = req.params;
-  const {name, type, birthdate, notes, user_id} = req.body;
+  const {name, type, birthdate, notes} = req.body;
 
   try {
     let myQuery = `UPDATE petlist SET `;
@@ -64,9 +63,6 @@ router.put('/:pet_id', userShouldBeLoggedIn, async (req, res) => {
     }
     if (notes) {
       myQuery += `notes = '${notes}', `;
-    }
-    if (user_id) {
-      myQuery += `user_id = '${user_id}', `;
     }
     myQuery = myQuery.slice(0, -2); // Remove the trailing comma and space
     myQuery += ` WHERE id = ${pet_id};`;
