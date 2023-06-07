@@ -1,15 +1,14 @@
 import React, { useRef, useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import "./Dashboard.css";
+import Calendar from 'react-calendar';
 
 
 function Dashboard() {
 
   const [user, setUser] = useState([]);
   const [error, setError] = useState(null);
-  const { firstname, lastname, email } = user;
+  const [date, setDate] = useState(new Date())
 
 
   useEffect(() => {
@@ -44,7 +43,7 @@ function Dashboard() {
 
 
     return (
-      <div>
+      <div className="dashboard">
         <br /><br /><br />
         <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header><br/>
         <h1>Welcome to your Dashboard</h1>
@@ -62,7 +61,6 @@ function Dashboard() {
               </div>
             )
           )}
-
           </div>
         </div>
         <div className="navLinks">
@@ -78,6 +76,13 @@ function Dashboard() {
           >
            🖋️ Add a pet 🖋️
           </Link>
+        </div>
+        <h2>My Pets' Calendar</h2>
+        <div className="calendar-container">
+          <Calendar onChange={setDate} value={date}/>
+        </div>
+        <div className="text-center">
+            Selected date: {date.toDateString()}
         </div>
       </div>
     );
