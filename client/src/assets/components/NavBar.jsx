@@ -5,6 +5,7 @@ import AuthContext from "../../context/AuthContext";
 export default function NavBar() {
 
     const auth = useContext(AuthContext);
+    const [user, setUser] = useState(null);
 
     const [isNavOpen, setIsNavOpen] = useState(false);
 

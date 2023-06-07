@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./assets/Pages/Home";
 import Pet from "./assets/Pages/Pet";
@@ -15,7 +15,7 @@ import RequireAuth from "./assets/components/RequireAuth";
 function App() {
 
   const [user, setUser] = useState(null);
-  const [user_id, setUser_id] = useState(null);
+  // const auth = useContext(AuthContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -26,14 +26,12 @@ function App() {
 
   function login(email, password) {
     setUser(true)
-    console.log("login")
   }
 
-  function logout() {
-    setUser(false)
-    localStorage.removeItem(token)
-    console.log("logout")
-  }
+  const logout = () => {
+    setUser(false);
+    localStorage.removeItem("token");
+  };
 
   const authObject = {
     user,

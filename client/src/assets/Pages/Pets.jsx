@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import EditPet from "../components/EditPet";
 import dayjs from "dayjs";
 import "./Pets.css";
@@ -9,7 +9,6 @@ export default function Pets(props) {
   const [error, setError] = useState(null);
   const [editingPetId, setEditingPetId] = useState(null);
   const navigate = useNavigate();
-  const { id } = useParams();
 
   useEffect(() => {
     getPets();

@@ -6,7 +6,7 @@ const userShouldBeLoggedIn = require("../model/guards/userShouldBeLoggedIn");
 
 // GET users listing
 router.get('/', userShouldBeLoggedIn, function(req, res) {
-  db(`SELECT * FROM users WHERE user_id=${req.user_id};`)
+  db(`SELECT * FROM users WHERE id=${req.user_id};`)
     .then(results => {
       res.send(results.data);
     })

@@ -15,7 +15,7 @@ function Home() {
     <div className="container-fluid">
       <div className="content">
         <br></br><br></br>
-        <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header>
+        <header><img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header>
         <h1>Pet Diary 📖</h1>
         <div className="home-container">
             {currentForm === 'login'? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>}

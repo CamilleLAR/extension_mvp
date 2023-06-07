@@ -25,7 +25,7 @@ h4 {
   width: 100%;
 }
 
-img {
-  width: 100%;
+header img {
+  max-width: 100%;
   max-height: 10%;
 }
