@@ -35,20 +35,20 @@ export default function Pets(props) {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="petspage">
       <br /><br /><br />
       <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header>
       <h1 className="text-center">My Pets 🐾</h1><br />
 
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      <div className="petscontainer">
         {pets ?
           (
             pets.map((pet) => (
-              <div key={pet.id} className="col-3">
+              <div key={pet.id} className="pet">
                 <Link to={`/private/pets/${pet.id}`} className="card text-decoration-none">
                   <div className="card-body">
                     <div className="pet-image">
-                      <img src="/rabbit.png" alt="Pet" className="img-fluid" />
+                      <img src="/rabbit.png" alt="Pet" className="petpic" />
                     </div>
                     <div className="pet-items">
                       <h2 className="card-title">{pet.name}</h2>
