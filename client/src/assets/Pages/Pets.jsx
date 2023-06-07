@@ -65,7 +65,7 @@ export default function Pets(props) {
   };
 
   const showPetPage = (id) => {
-    navigate(`/api/pets/${id}`);
+    navigate(`/private/pets/${id}`);
   };
 
   return (
@@ -79,7 +79,7 @@ export default function Pets(props) {
           (
             pets.map((pet) => (
               <div key={pet.id} className="col-3">
-                <Link to={`/pets/${pet.id}`} className="card text-decoration-none">
+                <Link to={`/private/pets/${pet.id}`} className="card text-decoration-none">
                   <div className="card-body">
                     <div className="pet-image">
                       <img src="/rabbit.png" alt="Pet" className="img-fluid" />
@@ -87,7 +87,7 @@ export default function Pets(props) {
                     <div className="pet-items">
                       <h2 className="card-title">{pet.name}</h2>
                       <h5>Type: {pet.type}</h5>
-                      <h6>Age: {dayjs(pet.birthdate).format("DD/MM/YYYY")}</h6>
+                      <h6>DOB: {dayjs(pet.birthdate).format("DD/MM/YYYY")}</h6>
                       <p>Notes: {pet.notes}</p>
                     </div>
                   </div>

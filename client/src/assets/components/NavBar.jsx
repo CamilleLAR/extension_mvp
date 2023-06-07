@@ -45,7 +45,13 @@ export default function NavBar() {
                                     <Link className="nav-link" to="/private/pets">
                                         My Pets
                                     </Link>
-                                </li>     
+                                    </li>  
+                                    <Link
+                                        className="nav-link"
+                                        to="/private/addpet"
+                                    >
+                                        Add a pet
+                                    </Link>    
                             </ul>
                             <button onClick={logout} className="logoutBtn">Logout</button>
                         </div>

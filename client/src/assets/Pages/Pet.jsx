@@ -19,6 +19,7 @@ function Pet() {
       const response = await fetch(`/api/pets/${pet_id}`);
       const data = await response.json();
       setPet(data);
+      console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +64,7 @@ function Pet() {
     <header> <img src="https://cdn.pixabay.com/photo/2020/12/01/07/04/cats-5793173_1280.jpg"/></header>
     <div className="container">
       
-      <h1>Pet Profile🧸</h1>
+      <h1>{pet.name} Profile🧸</h1>
       <div className="row">
         <div className="col-lg-4">
           <img
@@ -75,7 +76,7 @@ function Pet() {
         <div className="col-lg-8">
           <div className="card border border-5 border-success" >
             <div className="card-body">
-              <h1 className="card-title">{pet.name}</h1>
+              <h1 className="card-title">Name: {pet.name}</h1>
               <h3 className="card-text">Type: {pet.type}</h3>
               <h5 className="card-text">Birthdate: {shortDateFormat}</h5>
               <p className="card-text">Notes: {pet.notes}</p>
