@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
 
     const auth = useContext(AuthContext);
     const [user, setUser] = useState(null);
-
+    const navigate = useNavigate()
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     const toggleNav = () => {
@@ -17,6 +18,7 @@ export default function NavBar() {
         auth.logout();
         setUser(false);
         localStorage.removeItem("token");
+        navigate("/");
       };
 
     return (
